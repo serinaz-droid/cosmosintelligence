@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CosmoBrain — AI Search for Universal-Scale Information Networks</title>
+  <meta name="description" content="An open, remote research and product initiative using AI to study cosmic-scale structure, signals, anomalies, and information-flow patterns across public space data.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/cosmos.css">
+</head>
+<body>
+  <canvas id="starfield" aria-hidden="true"></canvas>
+  <div class="nebula" aria-hidden="true">
+    <span class="nebula__blob nebula__blob--1"></span>
+    <span class="nebula__blob nebula__blob--2"></span>
+    <span class="nebula__blob nebula__blob--3"></span>
+  </div>
+  <div class="orbits" aria-hidden="true">
+    <span class="orbit orbit--1"></span>
+    <span class="orbit orbit--2"></span>
+    <span class="orbit orbit--3"></span>
+  </div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <div id="loader" class="loader">
+    <div class="loader__mark">COSMOBRAIN</div>
+    <div class="loader__grid"><span class="lg__cell" style="--g:0"></span><span class="lg__cell" style="--g:1"></span><span class="lg__cell" style="--g:2"></span><span class="lg__cell" style="--g:3"></span><span class="lg__cell" style="--g:4"></span><span class="lg__cell" style="--g:5"></span><span class="lg__cell" style="--g:6"></span><span class="lg__cell" style="--g:7"></span><span class="lg__cell" style="--g:8"></span><span class="lg__cell" style="--g:9"></span><span class="lg__cell" style="--g:10"></span><span class="lg__cell" style="--g:11"></span><span class="lg__cell" style="--g:12"></span><span class="lg__cell" style="--g:13"></span><span class="lg__cell" style="--g:14"></span><span class="lg__cell" style="--g:15"></span><span class="lg__cell" style="--g:16"></span><span class="lg__cell" style="--g:17"></span><span class="lg__cell" style="--g:18"></span><span class="lg__cell" style="--g:19"></span><span class="lg__cell" style="--g:20"></span><span class="lg__cell" style="--g:21"></span><span class="lg__cell" style="--g:22"></span><span class="lg__cell" style="--g:23"></span><span class="lg__cell" style="--g:24"></span><span class="lg__cell" style="--g:25"></span><span class="lg__cell" style="--g:26"></span><span class="lg__cell" style="--g:27"></span><span class="lg__cell" style="--g:28"></span><span class="lg__cell" style="--g:29"></span><span class="lg__cell" style="--g:30"></span><span class="lg__cell" style="--g:31"></span><span class="lg__cell" style="--g:32"></span><span class="lg__cell" style="--g:33"></span><span class="lg__cell" style="--g:34"></span><span class="lg__cell" style="--g:35"></span><span class="lg__cell" style="--g:36"></span><span class="lg__cell" style="--g:37"></span><span class="lg__cell" style="--g:38"></span><span class="lg__cell" style="--g:39"></span><span class="lg__cell" style="--g:40"></span><span class="lg__cell" style="--g:41"></span><span class="lg__cell" style="--g:42"></span><span class="lg__cell" style="--g:43"></span><span class="lg__cell" style="--g:44"></span><span class="lg__cell" style="--g:45"></span><span class="lg__cell" style="--g:46"></span><span class="lg__cell" style="--g:47"></span></div>
+    <div class="loader__row">
+      <span class="loader__status">INITIALIZING COSMIC DATA</span>
+      <span class="loader__pct">0%</span>
+    </div>
+  </div>
+
+  <header class="topbar">
+    <a class="brand" href="#sec-cover" aria-label="CosmoBrain home">
+      <span class="brand__dot"></span>
+      <span class="brand__name">COSMOBRAIN</span>
+    </a>
+    <div class="topbar__actions">
+      <button class="hbtn hbtn--ghost" id="indexBtn"><span class="hbtn__sq"></span>INDEX</button>
+      <a class="hbtn hbtn--solid" href="#sec-join"><span class="hbtn__sq"></span>JOIN</a>
+    </div>
+  </header>
+
+  <nav class="rail" aria-label="Section navigation">
+    <span class="rail__line"></span>
+      <button class="rail__item" data-target="sec-cover">
+        <span class="rail__num">00</span>
+        <span class="rail__label">CosmoBrain</span>
+      </button>
+      <button class="rail__item" data-target="sec-question">
+        <span class="rail__num">01</span>
+        <span class="rail__label">The big question</span>
+      </button>
+      <button class="rail__item" data-target="sec-building">
+        <span class="rail__num">02</span>
+        <span class="rail__label">What we are building</span>
+      </button>
+      <button class="rail__item" data-target="sec-now">
+        <span class="rail__num">03</span>
+        <span class="rail__label">Why this is possible now</span>
+      </button>
+      <button class="rail__item" data-target="sec-anchor">
+        <span class="rail__num">04</span>
+        <span class="rail__label">Scientific anchor</span>
+      </button>
+      <button class="rail__item" data-target="sec-data">
+        <span class="rail__num">05</span>
+        <span class="rail__label">The data universe</span>
+      </button>
+      <button class="rail__item" data-target="sec-pipeline">
+        <span class="rail__num">06</span>
+        <span class="rail__label">Research pipeline</span>
+      </button>
+      <button class="rail__item" data-target="sec-evidence">
+        <span class="rail__num">07</span>
+        <span class="rail__label">What counts as evidence?</span>
+      </button>
+      <button class="rail__item" data-target="sec-architecture">
+        <span class="rail__num">08</span>
+        <span class="rail__label">AI architecture</span>
+      </button>
+      <button class="rail__item" data-target="sec-tracks">
+        <span class="rail__num">09</span>
+        <span class="rail__label">Two tracks in parallel</span>
+      </button>
+      <button class="rail__item" data-target="sec-app">
+        <span class="rail__num">10</span>
+        <span class="rail__label">AI Space View App</span>
+      </button>
+      <button class="rail__item" data-target="sec-buddy">
+        <span class="rail__num">11</span>
+        <span class="rail__label">FloBrain Space Buddy</span>
+      </button>
+      <button class="rail__item" data-target="sec-open">
+        <span class="rail__num">12</span>
+        <span class="rail__label">Open to anyone, anywhere</span>
+      </button>
+      <button class="rail__item" data-target="sec-roles">
+        <span class="rail__num">13</span>
+        <span class="rail__label">Role pathways</span>
+      </button>
+      <button class="rail__item" data-target="sec-buildpath">
+        <span class="rail__num">14</span>
+        <span class="rail__label">Build path</span>
+      </button>
+      <button class="rail__item" data-target="sec-produce">
+        <span class="rail__num">15</span>
+        <span class="rail__label">What contributors produce</span>
+      </button>
+      <button class="rail__item" data-target="sec-join">
+        <span class="rail__num">→</span>
+        <span class="rail__label">Join the search</span>
+      </button>
+      <button class="rail__item" data-target="sec-sources">
+        <span class="rail__num">16</span>
+        <span class="rail__label">Selected sources</span>
+      </button>
+  </nav>
+
+  <main id="main">
+    <section class="scene scene--hero" id="sec-cover" data-index="00" data-nav="CosmoBrain" data-screen-label="Cover">
+      <canvas class="hero__web" aria-hidden="true"></canvas>
+      <div class="scene__inner hero__inner">
+        <div class="eyebrow eyebrow--hero" data-reveal style="--i:0">
+          <span class="eyebrow__num">00</span>
+          <span class="eyebrow__rule"></span>
+          <span class="eyebrow__org">FloLabs Group / TARRL</span>
+        </div>
+        <h1 class="hero__title" data-scramble>CosmoBrain</h1>
+        <p class="hero__tagline" data-reveal style="--i:1">AI Search for Universal-Scale Information Networks</p>
+        <p class="hero__lead" data-reveal style="--i:2">An open, remote research and product initiative using AI to study cosmic-scale structure, signals, anomalies, and information-flow patterns across public space data.</p>
+        <div class="chips" data-reveal style="--i:3">
+          <span class="chip">Open to the world</span>
+          <span class="chip">No experience necessary</span>
+          <span class="chip">Research + product</span>
+        </div>
+      </div>
+      <div class="hero__cue" data-reveal style="--i:4"><span class="hero__cue-line"></span>SCROLL TO EXPLORE</div>
+    </section>
+    <section class="scene" id="sec-question" data-index="01" data-nav="The big question" data-screen-label="01 The big question">
+      <div class="scene__inner">
+      <div class="eyebrow" data-reveal style="--i:0">
+        <span class="eyebrow__num">01</span>
+        <span class="eyebrow__rule"></span>
+        <span class="eyebrow__org">FloLabs Group | Texas Advanced Robotics Research Lab (TARRL)</span>
+      </div>
+      <h2 class="title" data-scramble data-reveal style="--i:1">The big question</h2>
+      <p class="subtitle" data-reveal style="--i:2">Can AI help us detect hidden structure, signal behavior, and information-like patterns in the observable Universe?</p>
+      <div class="statement" data-reveal style="--i:3">
+        <p class="prose">We are not claiming the Universe is conscious. We are building a disciplined system that tests whether public cosmic data contains patterns too large, subtle, or multidimensional for humans to inspect manually.</p>
+        <p class="prose">The inspiring idea: galaxies, filaments, light, spectra, plasma, gravity, and time-varying signals may form a vast network. The scientific task is to measure what is real and reject what is illusion.</p>
+      </div>
+      <p class="standard" data-reveal style="--i:4"><span class="standard__tag">STANDARD</span>Our standard: every candidate pattern must survive data provenance checks, known-physics controls, statistical testing, and independent review.</p>
+      </div>
+    </section>
+    <section class="scene" id="sec-building" data-index="02" data-nav="What we are building" data-screen-label="02 What we are building">
+      <div class="scene__inner">
+      <div class="eyebrow" data-reveal style="--i:0">
+        <span class="eyebrow__num">02</span>
+        <span class="eyebrow__rule"></span>
+        <span class="eyebrow__org">FloLabs Group | Texas Advanced Robotics Research Lab (TARRL)</span>
+      </div>
+      <h2 class="title" data-scramble data-reveal style="--i:1">What we are building</h2>
+      <p class="subtitle" data-reveal style="--i:2">One initiative, three connected outputs.</p>
+      <div class="cards cards--3" data-reveal style="--i:3">
+        <article class="card" style="--c:0">
+          <span class="card__idx">01</span>
+          <h3 class="card__title">Cosmic research engine</h3>
+          <p class="card__body">Ingests public astronomy data, learns normal astrophysics, creates cosmic graphs, and ranks anomalies for review.</p>
+        </article>
+        <article class="card" style="--c:1">
+          <span class="card__idx">02</span>
+          <h3 class="card__title">AI Space View App</h3>
+          <p class="card__body">A public-facing app for exploring space images, maps, signals, and AI-discovered anomalies through an educational visual interface.</p>
+        </article>
+        <article class="card" style="--c:2">
+          <span class="card__idx">03</span>
+          <h3 class="card__title">FloBrain Space Buddy</h3>
+          <p class="card__body">A conversational AI guide inside FloBrain that helps users learn astronomy, review datasets, organize research tasks, and explain discoveries.</p>
+        </article>
+      </div>
+      <p class="note" data-reveal style="--i:8">The research team and product team work in parallel: science creates credibility, the app creates public engagement, and FloBrain Space Buddy turns the work into a scalable AI learning experience.</p>
+      </div>
+    </section>
+    <section class="scene" id="sec-now" data-index="03" data-nav="Why this is possible now" data-screen-label="03 Why this is possible now">
+      <div class="scene__inner">
+      <div class="eyebrow" data-reveal style="--i:0">
+        <span class="eyebrow__num">03</span>
+        <span class="eyebrow__rule"></span>
+        <span class="eyebrow__org">FloLabs Group | Texas Advanced Robotics Research Lab (TARRL)</span>
+      </div>
+      <h2 class="title" data-scramble data-reveal style="--i:1">Why this is possible now</h2>
+      <p class="subtitle" data-reveal style="--i:2">Open sky archives plus modern AI create a new way to study the Universe.</p>
+      <div class="cards cards--2 cards--tile" data-reveal style="--i:3">
+        <article class="tile" style="--c:0">
+          <span class="tile__idx">01</span>
+          <h3 class="tile__title">Open space archives</h3>
+          <p class="tile__body">NASA, ESA, SDSS, DESI, ALMA and others expose enormous public astronomy datasets.</p>
+        </article>
+        <article class="tile" style="--c:1">
+          <span class="tile__idx">02</span>
+          <h3 class="tile__title">Foundation models</h3>
+          <p class="tile__body">Self-supervised AI can learn structure from images, spectra, light curves, catalogs, and graphs.</p>
+        </article>
+        <article class="tile" style="--c:2">
+          <span class="tile__idx">03</span>
+          <h3 class="tile__title">Graph intelligence</h3>
+          <p class="tile__body">The cosmic web can be modeled as nodes, edges, clusters, paths, voids, and recurring motifs.</p>
+        </article>
+        <article class="tile" style="--c:3">
+          <span class="tile__idx">04</span>
+          <h3 class="tile__title">Signal search maturity</h3>
+          <p class="tile__body">SETI and radio astronomy methods provide useful controls for noise, interference, and false positives.</p>
+        </article>
+      </div>
+      <p class="note note--ref" data-reveal style="--i:8">Reference archives and methods: NASA MAST, NASA HEASARC, ESA Gaia, ESA Euclid, SDSS, DESI Legacy Surveys, Berkeley SETI / Breakthrough Listen.</p>
+      </div>
+    </section>
+    <section class="scene" id="sec-anchor" data-index="04" data-nav="Scientific anchor" data-screen-label="04 Scientific anchor">
+      <div class="scene__inner">
+      <div class="eyebrow" data-reveal style="--i:0">
+        <span class="eyebrow__num">04</span>
+        <span class="eyebrow__rule"></span>
+        <span class="eyebrow__org">FloLabs Group | Texas Advanced Robotics Research Lab (TARRL)</span>
+      </div>
+      <h2 class="title" data-scramble data-reveal style="--i:1">Scientific anchor: networks can rhyme across scales</h2>
+      <p class="subtitle" data-reveal style="--i:2">The cosmic-web / brain analogy is a mathematical starting point, not a conclusion.</p>
+      <div class="anchor">
+        <div class="anchor__text" data-reveal style="--i:3">
+          <p class="prose">Published research has compared structural, morphological, network, and information-capacity properties of neuronal networks and the cosmic web. That does not prove cosmic consciousness. It does justify careful, quantitative network comparison.</p>
+          <p class="prose">Our method begins with measurable network structure, time-varying signals, anomaly detection, and evidence standards.</p>
+        </div>
+        <div class="pills" data-reveal style="--i:4">
+          <div class="pill" style="--c:0">
+            <span class="pill__title">Network</span>
+            <span class="pill__body">topology, clustering, centrality, motifs</span>
+          </div>
+          <div class="pill" style="--c:1">
+            <span class="pill__title">Signal</span>
+            <span class="pill__body">light curves, spectra, radio pulses, bursts</span>
+          </div>
+          <div class="pill" style="--c:2">
+            <span class="pill__title">Evidence</span>
+            <span class="pill__body">replication, prediction, falsification</span>
+          </div>
+        </div>
+      </div>
+      <p class="note note--ref" data-reveal style="--i:8">Scientific basis includes Vazza &amp; Feletti, “The Quantitative Comparison Between the Neuronal Network and the Cosmic Web,” Frontiers in Physics.</p>
+      </div>
+    </section>
+    <section class="scene" id="sec-data" data-index="05" data-nav="The data universe" data-screen-label="05 The data universe">
+      <div class="scene__inner">
+      <div class="eyebrow" data-reveal style="--i:0">
+        <span class="eyebrow__num">05</span>
+        <span class="eyebrow__rule"></span>
+        <span class="eyebrow__org">FloLabs Group | Texas Advanced Robotics Research Lab (TARRL)</span>
+      </div>
+      <h2 class="title" data-scramble data-reveal style="--i:1">The data universe: not just space pictures</h2>
+      <p class="subtitle" data-reveal style="--i:2">Beautiful images inspire people. Raw and calibrated data trains the AI.</p>
+      <div class="cards cards--3 cards--tile" data-reveal style="--i:3">
+        <article class="tile" style="--c:0">
+          <span class="tile__idx">01</span>
+          <h3 class="tile__title">Images</h3>
+          <p class="tile__body">FITS, sky surveys, morphology</p>
+        </article>
+        <article class="tile" style="--c:1">
+          <span class="tile__idx">02</span>
+          <h3 class="tile__title">Spectra</h3>
+          <p class="tile__body">chemical signatures, redshift, lines</p>
+        </article>
+        <article class="tile" style="--c:2">
+          <span class="tile__idx">03</span>
+          <h3 class="tile__title">Light curves</h3>
+          <p class="tile__body">brightness over time, pulses, flares</p>
+        </article>
+        <article class="tile" style="--c:3">
+          <span class="tile__idx">04</span>
+          <h3 class="tile__title">Radio</h3>
+          <p class="tile__body">narrowband, broadband, drift patterns</p>
+        </article>
+        <article class="tile" style="--c:4">
+          <span class="tile__idx">05</span>
+          <h3 class="tile__title">High energy</h3>
+          <p class="tile__body">EUV, X-ray, gamma-ray, CMB</p>
+        </article>
+        <article class="tile" style="--c:5">
+          <span class="tile__idx">06</span>
+          <h3 class="tile__title">Graphs</h3>
+          <p class="tile__body">cosmic web, clusters, filaments</p>
+        </article>
+      </div>
+      <p class="note note--ref" data-reveal style="--i:8">Core data sources to integrate: NASA MAST, HEASARC, Exoplanet Archive, ESA Gaia, ESA Euclid, SDSS, DESI Legacy Surveys, ALMA, and open SETI datasets.</p>
+      </div>
+    </section>
+    <section class="scene" id="sec-pipeline" data-index="06" data-nav="Research pipeline" data-screen-label="06 Research pipeline">
+      <div class="scene__inner">
+      <div class="eyebrow" data-reveal style="--i:0">
+        <span class="eyebrow__num">06</span>
+        <span class="eyebrow__rule"></span>
+        <span class="eyebrow__org">FloLabs Group | Texas Advanced Robotics Research Lab (TARRL)</span>
+      </div>
+      <h2 class="title" data-scramble data-reveal style="--i:1">Research pipeline: learn normal before searching weird</h2>
+      <p class="subtitle" data-reveal style="--i:2">Most “patterns” are ordinary physics or instrument effects. The model must learn that first.</p>
+      <div class="rowlist" data-reveal style="--i:3">
+        <div class="rowitem" style="--c:0">
+          <span class="rowitem__idx">01</span>
+          <span class="rowitem__label">Normal sky</span>
+          <span class="rowitem__desc">stars, galaxies, quasars, nebulae, survey artifacts</span>
+        </div>
+        <div class="rowitem" style="--c:1">
+          <span class="rowitem__idx">02</span>
+          <span class="rowitem__label">Normal variability</span>
+          <span class="rowitem__desc">pulsars, variable stars, transits, flares, supernovae</span>
+        </div>
+        <div class="rowitem" style="--c:2">
+          <span class="rowitem__idx">03</span>
+          <span class="rowitem__label">Normal instruments</span>
+          <span class="rowitem__desc">noise, saturation, radio interference, compression, calibration effects</span>
+        </div>
+        <div class="rowitem" style="--c:3">
+          <span class="rowitem__idx">04</span>
+          <span class="rowitem__label">Normal physics</span>
+          <span class="rowitem__desc">gravity, lensing, plasma jets, redshift, dust, known spectra</span>
+        </div>
+      </div>
+      <p class="standard" data-reveal style="--i:4">Only after learning “normal” can the system rank what remains anomalous.</p>
+      </div>
+    </section>
+    <section class="scene" id="sec-evidence" data-index="07" data-nav="What counts as evidence?" data-screen-label="07 What counts as evidence?">
+      <div class="scene__inner">
+      <div class="eyebrow" data-reveal style="--i:0">
+        <span class="eyebrow__num">07</span>
+        <span class="eyebrow__rule"></span>
+        <span class="eyebrow__org">FloLabs Group | Texas Advanced Robotics Research Lab (TARRL)</span>
+      </div>
+      <h2 class="title" data-scramble data-reveal style="--i:1">What counts as evidence?</h2>
+      <p class="subtitle" data-reveal style="--i:2">The project succeeds by rejecting weak patterns quickly.</p>
+      <div class="ladder" data-reveal style="--i:3">
+        <div class="rung" style="--c:0">
+          <span class="rung__n">1</span>
+          <span class="rung__txt">Visible in raw data</span>
+        </div>
+        <div class="rung" style="--c:1">
+          <span class="rung__n">2</span>
+          <span class="rung__txt">Replicated across instruments</span>
+        </div>
+        <div class="rung" style="--c:2">
+          <span class="rung__n">3</span>
+          <span class="rung__txt">Survives known astrophysics</span>
+        </div>
+        <div class="rung" style="--c:3">
+          <span class="rung__n">4</span>
+          <span class="rung__txt">Statistically unlikely under controls</span>
+        </div>
+        <div class="rung" style="--c:4">
+          <span class="rung__n">5</span>
+          <span class="rung__txt">Information-rich or compressible</span>
+        </div>
+        <div class="rung" style="--c:5">
+          <span class="rung__n">6</span>
+          <span class="rung__txt">Predicts future observations</span>
+        </div>
+      </div>
+      <div class="callouts" data-reveal style="--i:4">
+        <p class="callout callout--a">No prediction = interesting pattern.</p>
+        <p class="callout callout--b">Prediction + replication = research candidate.</p>
+        <p class="callout callout--note">This is how we protect the work from hype and protect contributors from weak science.</p>
+      </div>
+      </div>
+    </section>
+    <section class="scene" id="sec-architecture" data-index="08" data-nav="AI architecture" data-screen-label="08 AI architecture">
+      <div class="scene__inner">
+      <div class="eyebrow" data-reveal style="--i:0">
+        <span class="eyebrow__num">08</span>
+        <span class="eyebrow__rule"></span>
+        <span class="eyebrow__org">FloLabs Group | Texas Advanced Robotics Research Lab (TARRL)</span>
+      </div>
+      <h2 class="title" data-scramble data-reveal style="--i:1">AI architecture: the cosmic foundation model stack</h2>
+      <p class="subtitle" data-reveal style="--i:2">A multimodal AI stack that converts open archives into testable candidates.</p>
+      <div class="flow" data-reveal style="--i:3">
+        <div class="flow__node" style="--c:0">
+          <span class="flow__n">1</span>
+          <span class="flow__label">Open science data lake</span>
+        </div>
+        <span class="flow__arrow" aria-hidden="true">&rarr;</span>
+        <div class="flow__node" style="--c:1">
+          <span class="flow__n">2</span>
+          <span class="flow__label">Multimodal embeddings</span>
+        </div>
+        <span class="flow__arrow" aria-hidden="true">&rarr;</span>
+        <div class="flow__node" style="--c:2">
+          <span class="flow__n">3</span>
+          <span class="flow__label">Cosmic graph</span>
+        </div>
+        <span class="flow__arrow" aria-hidden="true">&rarr;</span>
+        <div class="flow__node" style="--c:3">
+          <span class="flow__n">4</span>
+          <span class="flow__label">Anomaly + information engine</span>
+        </div>
+        <span class="flow__arrow" aria-hidden="true">&rarr;</span>
+        <div class="flow__node" style="--c:4">
+          <span class="flow__n">5</span>
+          <span class="flow__label">Validation pipeline</span>
+        </div>
+        <span class="flow__arrow" aria-hidden="true">&rarr;</span>
+        <div class="flow__node" style="--c:5">
+          <span class="flow__n">6</span>
+          <span class="flow__label">Candidate dashboard</span>
+        </div>
+      </div>
+      <div class="cards cards--3 cards--model" data-reveal style="--i:4">
+        <article class="modelcard" style="--c:0">
+          <h3 class="modelcard__title">Vision model</h3>
+          <p class="modelcard__body">galaxy morphology and survey images</p>
+        </article>
+        <article class="modelcard" style="--c:1">
+          <h3 class="modelcard__title">Spectral model</h3>
+          <p class="modelcard__body">emission/absorption lines and redshift</p>
+        </article>
+        <article class="modelcard" style="--c:2">
+          <h3 class="modelcard__title">Time-series model</h3>
+          <p class="modelcard__body">light curves, bursts, pulses</p>
+        </article>
+        <article class="modelcard" style="--c:3">
+          <h3 class="modelcard__title">Graph model</h3>
+          <p class="modelcard__body">cosmic web connectivity and motifs</p>
+        </article>
+        <article class="modelcard" style="--c:4">
+          <h3 class="modelcard__title">Information engine</h3>
+          <p class="modelcard__body">entropy, compression, symbolic structure</p>
+        </article>
+        <article class="modelcard" style="--c:5">
+          <h3 class="modelcard__title">Control filters</h3>
+          <p class="modelcard__body">instrument artifacts, radio interference, false positives</p>
+        </article>
+      </div>
+      </div>
+    </section>
+    <section class="scene" id="sec-tracks" data-index="09" data-nav="Two tracks in parallel" data-screen-label="09 Two tracks in parallel">
+      <div class="scene__inner">
+      <div class="eyebrow" data-reveal style="--i:0">
+        <span class="eyebrow__num">09</span>
+        <span class="eyebrow__rule"></span>
+        <span class="eyebrow__org">FloLabs Group | Texas Advanced Robotics Research Lab (TARRL)</span>
+      </div>
+      <h2 class="title" data-scramble data-reveal style="--i:1">Two tracks move in parallel</h2>
+      <p class="subtitle" data-reveal style="--i:2">The initiative is both a research program and a product launch path.</p>
+      <div class="cards cards--2 cards--wide" data-reveal style="--i:3">
+        <article class="card" style="--c:0">
+          <span class="card__idx">01</span>
+          <h3 class="card__title">Research Track</h3>
+          <p class="card__body">Build data pipelines, train models, map the cosmic graph, document methods, rank anomalies, and create review workflows.</p>
+        </article>
+        <article class="card" style="--c:1">
+          <span class="card__idx">02</span>
+          <h3 class="card__title">Product Track</h3>
+          <p class="card__body">Turn the work into the AI Space View App and FloBrain Space Buddy: a visual, conversational, educational, and commercial space-intelligence experience.</p>
+        </article>
+      </div>
+      <p class="note" data-reveal style="--i:8">The commercial project matters because it creates a public interface for learning, discovery review, recruitment, and long-term sustainability.</p>
+      </div>
+    </section>
+    <section class="scene" id="sec-app" data-index="10" data-nav="AI Space View App" data-screen-label="10 AI Space View App">
+      <div class="scene__inner">
+      <div class="eyebrow" data-reveal style="--i:0">
+        <span class="eyebrow__num">10</span>
+        <span class="eyebrow__rule"></span>
+        <span class="eyebrow__org">FloLabs Group | Texas Advanced Robotics Research Lab (TARRL)</span>
+      </div>
+      <h2 class="title" data-scramble data-reveal style="--i:1">AI Space View App</h2>
+      <p class="subtitle" data-reveal style="--i:2">A commercial product that lets anyone explore the Universe with AI.</p>
+      <div class="cards cards--2 cards--quad" data-reveal style="--i:3">
+        <article class="card" style="--c:0">
+          <span class="card__idx">01</span>
+          <h3 class="card__title">Explore</h3>
+          <p class="card__body">Search and browse open space images, sky maps, spectra, light curves, and cosmic regions.</p>
+        </article>
+        <article class="card" style="--c:1">
+          <span class="card__idx">02</span>
+          <h3 class="card__title">Explain</h3>
+          <p class="card__body">Ask AI what a galaxy, nebula, signal, light curve, or anomaly might mean in plain English.</p>
+        </article>
+        <article class="card" style="--c:2">
+          <span class="card__idx">03</span>
+          <h3 class="card__title">Compare</h3>
+          <p class="card__body">View cosmic structures alongside brain-network, graph, and information-theory visualizations.</p>
+        </article>
+        <article class="card" style="--c:3">
+          <span class="card__idx">04</span>
+          <h3 class="card__title">Contribute</h3>
+          <p class="card__body">Help classify patterns, annotate data, review candidates, and participate in public science tasks.</p>
+        </article>
+      </div>
+      <p class="note" data-reveal style="--i:8">Product vision: the easiest way for students, researchers, lifelong learners, and space enthusiasts to see what AI is discovering in open cosmic data.</p>
+      </div>
+    </section>
+    <section class="scene" id="sec-buddy" data-index="11" data-nav="FloBrain Space Buddy" data-screen-label="11 FloBrain Space Buddy">
+      <div class="scene__inner">
+      <div class="eyebrow" data-reveal style="--i:0">
+        <span class="eyebrow__num">11</span>
+        <span class="eyebrow__rule"></span>
+        <span class="eyebrow__org">FloLabs Group | Texas Advanced Robotics Research Lab (TARRL)</span>
+      </div>
+      <h2 class="title" data-scramble data-reveal style="--i:1">FloBrain Space Buddy</h2>
+      <p class="subtitle" data-reveal style="--i:2">A conversational AI research and learning companion inside FloBrain.</p>
+      <div class="cards cards--2 cards--quad" data-reveal style="--i:3">
+        <article class="card" style="--c:0">
+          <span class="card__idx">01</span>
+          <h3 class="card__title">Learn</h3>
+          <p class="card__body">Guided explanations of astronomy, AI, network science, SETI methods, and evidence standards.</p>
+        </article>
+        <article class="card" style="--c:1">
+          <span class="card__idx">02</span>
+          <h3 class="card__title">Research</h3>
+          <p class="card__body">Dataset summaries, literature review support, task tracking, meeting notes, and project memory.</p>
+        </article>
+        <article class="card" style="--c:2">
+          <span class="card__idx">03</span>
+          <h3 class="card__title">Analyze</h3>
+          <p class="card__body">Prompt-driven review of candidate anomalies, plots, metadata, and control-test status.</p>
+        </article>
+        <article class="card" style="--c:3">
+          <span class="card__idx">04</span>
+          <h3 class="card__title">Build</h3>
+          <p class="card__body">Support for interns and research associates working on app features, datasets, workflows, and demos.</p>
+        </article>
+      </div>
+      <p class="note" data-reveal style="--i:8">FloBrain Space Buddy turns a complex research initiative into a guided, persistent, AI-powered learning and productivity environment.</p>
+      </div>
+    </section>
+    <section class="scene" id="sec-open" data-index="12" data-nav="Open to anyone, anywhere" data-screen-label="12 Open to anyone, anywhere">
+      <div class="scene__inner">
+      <div class="eyebrow" data-reveal style="--i:0">
+        <span class="eyebrow__num">12</span>
+        <span class="eyebrow__rule"></span>
+        <span class="eyebrow__org">FloLabs Group | Texas Advanced Robotics Research Lab (TARRL)</span>
+      </div>
+      <h2 class="title" data-scramble data-reveal style="--i:1">Open to anyone, anywhere</h2>
+      <p class="subtitle" data-reveal style="--i:2">Remote. Global. Beginner-friendly. Serious about contribution.</p>
+      <div class="anchor">
+        <div class="anchor__text" data-reveal style="--i:3">
+          <p class="prose">No experience necessary to begin. Curiosity, reliability, persistence, and willingness to learn matter more than credentials at the entry point.</p>
+          <p class="prose">Join as an intern if you want structured learning and hands-on contribution. Join as a research associate if you already have stronger skills and want to help lead methods, review, or product work.</p>
+        </div>
+        <div class="cards cards--3 cards--tile cards--skills" data-reveal style="--i:4">
+          <article class="tile" style="--c:0">
+            <span class="tile__idx">01</span>
+            <h3 class="tile__title">AI / ML</h3>
+            <p class="tile__body">models, embeddings, anomaly detection</p>
+          </article>
+          <article class="tile" style="--c:1">
+            <span class="tile__idx">02</span>
+            <h3 class="tile__title">Astronomy</h3>
+            <p class="tile__body">data realism, sky catalogs, known phenomena</p>
+          </article>
+          <article class="tile" style="--c:2">
+            <span class="tile__idx">03</span>
+            <h3 class="tile__title">Data Engineering</h3>
+            <p class="tile__body">pipelines, metadata, reproducibility</p>
+          </article>
+          <article class="tile" style="--c:3">
+            <span class="tile__idx">04</span>
+            <h3 class="tile__title">Design / Product</h3>
+            <p class="tile__body">AI Space View App, UX, visualizations</p>
+          </article>
+          <article class="tile" style="--c:4">
+            <span class="tile__idx">05</span>
+            <h3 class="tile__title">Writing / Education</h3>
+            <p class="tile__body">explainers, curriculum, research pages</p>
+          </article>
+          <article class="tile" style="--c:5">
+            <span class="tile__idx">06</span>
+            <h3 class="tile__title">Project Ops</h3>
+            <p class="tile__body">tasks, documentation, coordination</p>
+          </article>
+        </div>
+      </div>
+      </div>
+    </section>
+    <section class="scene" id="sec-roles" data-index="13" data-nav="Role pathways" data-screen-label="13 Role pathways">
+      <div class="scene__inner">
+      <div class="eyebrow" data-reveal style="--i:0">
+        <span class="eyebrow__num">13</span>
+        <span class="eyebrow__rule"></span>
+        <span class="eyebrow__org">FloLabs Group | Texas Advanced Robotics Research Lab (TARRL)</span>
+      </div>
+      <h2 class="title" data-scramble data-reveal style="--i:1">Role pathways</h2>
+      <p class="subtitle" data-reveal style="--i:2">Start where you are. Grow into deeper responsibility.</p>
+      <div class="cards cards--3" data-reveal style="--i:3">
+        <article class="card" style="--c:0">
+          <span class="card__idx">01</span>
+          <h3 class="card__title">Intern</h3>
+          <p class="card__body">Entry path for learners. Help with research summaries, data labeling, app research, content, testing, documentation, and guided technical tasks.</p>
+        </article>
+        <article class="card" style="--c:1">
+          <span class="card__idx">02</span>
+          <h3 class="card__title">Research Associate</h3>
+          <p class="card__body">Contribution path for stronger builders and specialists. Help with model development, graph methods, signal analysis, review systems, and product architecture.</p>
+        </article>
+        <article class="card" style="--c:2">
+          <span class="card__idx">03</span>
+          <h3 class="card__title">Team Lead</h3>
+          <p class="card__body">Coordination path for reliable contributors. Help organize tasks, mentor others, maintain standards, and connect research work to product output.</p>
+        </article>
+      </div>
+      <p class="note" data-reveal style="--i:8">Everyone contributes to a real initiative: research outputs, AI systems, product features, education materials, and public demonstrations.</p>
+      </div>
+    </section>
+    <section class="scene" id="sec-buildpath" data-index="14" data-nav="Build path" data-screen-label="14 Build path">
+      <div class="scene__inner">
+      <div class="eyebrow" data-reveal style="--i:0">
+        <span class="eyebrow__num">14</span>
+        <span class="eyebrow__rule"></span>
+        <span class="eyebrow__org">FloLabs Group | Texas Advanced Robotics Research Lab (TARRL)</span>
+      </div>
+      <h2 class="title" data-scramble data-reveal style="--i:1">Build path: from open data to public product</h2>
+      <p class="subtitle" data-reveal style="--i:2">No fixed timeline. The team advances through milestones.</p>
+      <div class="steplist" data-reveal style="--i:3">
+        <div class="stepitem" style="--c:0">
+          <span class="stepitem__n">01</span>
+          <div class="stepitem__main">
+            <h3 class="stepitem__label">Map</h3>
+            <p class="stepitem__desc">Identify public archives, datasets, sky regions, formats, metadata, and research questions.</p>
+          </div>
+        </div>
+        <div class="stepitem" style="--c:1">
+          <span class="stepitem__n">02</span>
+          <div class="stepitem__main">
+            <h3 class="stepitem__label">Ingest</h3>
+            <p class="stepitem__desc">Create repeatable pipelines for images, catalogs, spectra, light curves, and graph-ready structures.</p>
+          </div>
+        </div>
+        <div class="stepitem" style="--c:2">
+          <span class="stepitem__n">03</span>
+          <div class="stepitem__main">
+            <h3 class="stepitem__label">Model</h3>
+            <p class="stepitem__desc">Train baseline models to understand normal data and rank anomalies for human review.</p>
+          </div>
+        </div>
+        <div class="stepitem" style="--c:3">
+          <span class="stepitem__n">04</span>
+          <div class="stepitem__main">
+            <h3 class="stepitem__label">Validate</h3>
+            <p class="stepitem__desc">Apply evidence standards, control tests, review workflows, and reproducibility checks.</p>
+          </div>
+        </div>
+        <div class="stepitem" style="--c:4">
+          <span class="stepitem__n">05</span>
+          <div class="stepitem__main">
+            <h3 class="stepitem__label">Productize</h3>
+            <p class="stepitem__desc">Turn research workflows into AI Space View App features and FloBrain Space Buddy experiences.</p>
+          </div>
+        </div>
+      </div>
+      <p class="standard" data-reveal style="--i:4">Milestone discipline matters more than deadlines: document progress, ship small outputs, improve the model, and keep connecting research to product.</p>
+      </div>
+    </section>
+    <section class="scene" id="sec-produce" data-index="15" data-nav="What contributors produce" data-screen-label="15 What contributors produce">
+      <div class="scene__inner">
+      <div class="eyebrow" data-reveal style="--i:0">
+        <span class="eyebrow__num">15</span>
+        <span class="eyebrow__rule"></span>
+        <span class="eyebrow__org">FloLabs Group | Texas Advanced Robotics Research Lab (TARRL)</span>
+      </div>
+      <h2 class="title" data-scramble data-reveal style="--i:1">What contributors will produce</h2>
+      <p class="subtitle" data-reveal style="--i:2">Visible outputs keep the project real, useful, and accountable.</p>
+      <div class="cards cards--3 cards--tile" data-reveal style="--i:3">
+        <article class="tile" style="--c:0">
+          <span class="tile__idx">01</span>
+          <h3 class="tile__title">Research briefs</h3>
+          <p class="tile__body">methods, literature summaries, benchmark datasets, anomaly findings, and negative results</p>
+        </article>
+        <article class="tile" style="--c:1">
+          <span class="tile__idx">02</span>
+          <h3 class="tile__title">Open data maps</h3>
+          <p class="tile__body">curated archive lists, metadata guides, sample regions, and reproducible notebooks</p>
+        </article>
+        <article class="tile" style="--c:2">
+          <span class="tile__idx">03</span>
+          <h3 class="tile__title">Candidate dashboard</h3>
+          <p class="tile__body">ranked anomalies, evidence-ladder status, raw-data links, and review notes</p>
+        </article>
+        <article class="tile" style="--c:3">
+          <span class="tile__idx">04</span>
+          <h3 class="tile__title">App features</h3>
+          <p class="tile__body">AI Space View exploration tools, visual explainers, search, annotation, and guided learning</p>
+        </article>
+        <article class="tile" style="--c:4">
+          <span class="tile__idx">05</span>
+          <h3 class="tile__title">FloBrain workflows</h3>
+          <p class="tile__body">Space Buddy memory, task systems, dataset summaries, and research operations</p>
+        </article>
+        <article class="tile" style="--c:5">
+          <span class="tile__idx">06</span>
+          <h3 class="tile__title">Public education</h3>
+          <p class="tile__body">lectures, explainers, website pages, short videos, and student-friendly guides</p>
+        </article>
+      </div>
+      <p class="note" data-reveal style="--i:8">Even if no extraordinary signal is found, the work still advances AI astronomy, anomaly detection, science education, and the Space Buddy product ecosystem.</p>
+      </div>
+    </section>
+    <section class="scene scene--cta" id="sec-join" data-index="" data-nav="Join the search" data-screen-label="Join the search">
+      <canvas class="hero__web hero__web--cta" aria-hidden="true"></canvas>
+      <div class="scene__inner cta__inner">
+        <h2 class="cta__title" data-scramble data-reveal style="--i:0">Join the search.</h2>
+        <div class="cta__body" data-reveal style="--i:1">
+          <p class="prose">Help build the AI layer that studies the Universe as a dynamic network of data, signals, structure, and possibility.</p>
+          <p class="prose">Open to interns and research associates around the world.</p>
+          <p class="prose">Remote participation. No experience necessary to begin.</p>
+          <p class="prose">Contribute to both open research and the AI Space View App / FloBrain Space Buddy commercial product track.</p>
+        </div>
+        <a class="cta__btn" href="#sec-cover" data-reveal style="--i:2"><span>BEGIN EXPLORATION</span></a>
+        <p class="cta__sign" data-reveal style="--i:3">FloLabs Group / TARRL</p>
+      </div>
+    </section>
+    <section class="scene" id="sec-sources" data-index="16" data-nav="Selected sources" data-screen-label="16 Selected sources">
+      <div class="scene__inner">
+      <div class="eyebrow" data-reveal style="--i:0">
+        <span class="eyebrow__num">16</span>
+        <span class="eyebrow__rule"></span>
+        <span class="eyebrow__org">FloLabs Group | Texas Advanced Robotics Research Lab (TARRL)</span>
+      </div>
+      <h2 class="title" data-scramble data-reveal style="--i:1">Selected sources and evidence base</h2>
+      <p class="subtitle" data-reveal style="--i:2">The initiative is grounded in open public archives, peer-reviewed research, and reproducible methods.</p>
+      <div class="sources" data-reveal style="--i:3">
+        <div class="source" style="--c:0">
+          <span class="source__idx">01</span>
+          <span class="source__name">Vazza &amp; Feletti, Frontiers in Physics</span>
+          <span class="source__desc">Quantitative comparison of neuronal networks and the cosmic web, including methodological caveats.</span>
+        </div>
+        <div class="source" style="--c:1">
+          <span class="source__idx">02</span>
+          <span class="source__name">NASA MAST / STScI</span>
+          <span class="source__desc">Public archive for optical, ultraviolet, and near-infrared astronomy data from major missions.</span>
+        </div>
+        <div class="source" style="--c:2">
+          <span class="source__idx">03</span>
+          <span class="source__name">NASA HEASARC</span>
+          <span class="source__desc">Public archive for high-energy astrophysics including EUV, X-ray, gamma-ray, and related data.</span>
+        </div>
+        <div class="source" style="--c:3">
+          <span class="source__idx">04</span>
+          <span class="source__name">ESA Gaia Archive</span>
+          <span class="source__desc">Large-scale public star-position, motion, and photometric data for mapping the Milky Way.</span>
+        </div>
+        <div class="source" style="--c:4">
+          <span class="source__idx">05</span>
+          <span class="source__name">ESA Euclid</span>
+          <span class="source__desc">Large-scale mapping of cosmic structure, dark matter, and galaxy evolution through public science releases.</span>
+        </div>
+        <div class="source" style="--c:5">
+          <span class="source__idx">06</span>
+          <span class="source__name">SDSS + DESI Legacy Surveys</span>
+          <span class="source__desc">Large public sky imaging, spectroscopy, and extragalactic survey catalogs.</span>
+        </div>
+        <div class="source" style="--c:6">
+          <span class="source__idx">07</span>
+          <span class="source__name">Berkeley SETI / Breakthrough Listen</span>
+          <span class="source__desc">Machine-learning and signal-processing methods relevant to technosignature search and false-positive control.</span>
+        </div>
+      </div>
+      <p class="urls" data-reveal style="--i:4">Useful URLs: frontiersin.org/articles/10.3389/fphy.2020.525731/full | archive.stsci.edu | heasarc.gsfc.nasa.gov | cosmos.esa.int/web/gaia | euclid-ec.org | sdss.org | legacysurvey.org | seti.berkeley.edu</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bottombar">
+    <div class="bottombar__left">
+      <span class="counter"><span class="counter__cur" id="curNum">00</span><span class="counter__sep">/</span><span class="counter__tot">16</span></span>
+      <span class="bottombar__label" id="curLabel">CosmoBrain</span>
+    </div>
+    <div class="bottombar__center">
+      <span class="scrollind"><span class="scrollind__dot"></span></span>
+      <span class="bottombar__tag">CosmoBrain: AI Search for Universal-Scale Information Networks</span>
+    </div>
+    <a class="bottombar__cta" href="#sec-join">JOIN THE SEARCH<span class="bottombar__arrow">&rarr;</span></a>
+  </footer>
+
+  <div id="menu" class="menu-overlay" aria-hidden="true">
+    <div class="menu-overlay__head">
+      <span class="menu-overlay__title">INDEX</span>
+      <button class="menu-overlay__close" id="menuClose" aria-label="Close index">CLOSE <span>&times;</span></button>
+    </div>
+    <div class="menu-overlay__list">
+        <a class="menu__item" href="#sec-cover">
+          <span class="menu__num">00</span>
+          <span class="menu__label">CosmoBrain</span>
+        </a>
+        <a class="menu__item" href="#sec-question">
+          <span class="menu__num">01</span>
+          <span class="menu__label">The big question</span>
+        </a>
+        <a class="menu__item" href="#sec-building">
+          <span class="menu__num">02</span>
+          <span class="menu__label">What we are building</span>
+        </a>
+        <a class="menu__item" href="#sec-now">
+          <span class="menu__num">03</span>
+          <span class="menu__label">Why this is possible now</span>
+        </a>
+        <a class="menu__item" href="#sec-anchor">
+          <span class="menu__num">04</span>
+          <span class="menu__label">Scientific anchor</span>
+        </a>
+        <a class="menu__item" href="#sec-data">
+          <span class="menu__num">05</span>
+          <span class="menu__label">The data universe</span>
+        </a>
+        <a class="menu__item" href="#sec-pipeline">
+          <span class="menu__num">06</span>
+          <span class="menu__label">Research pipeline</span>
+        </a>
+        <a class="menu__item" href="#sec-evidence">
+          <span class="menu__num">07</span>
+          <span class="menu__label">What counts as evidence?</span>
+        </a>
+        <a class="menu__item" href="#sec-architecture">
+          <span class="menu__num">08</span>
+          <span class="menu__label">AI architecture</span>
+        </a>
+        <a class="menu__item" href="#sec-tracks">
+          <span class="menu__num">09</span>
+          <span class="menu__label">Two tracks in parallel</span>
+        </a>
+        <a class="menu__item" href="#sec-app">
+          <span class="menu__num">10</span>
+          <span class="menu__label">AI Space View App</span>
+        </a>
+        <a class="menu__item" href="#sec-buddy">
+          <span class="menu__num">11</span>
+          <span class="menu__label">FloBrain Space Buddy</span>
+        </a>
+        <a class="menu__item" href="#sec-open">
+          <span class="menu__num">12</span>
+          <span class="menu__label">Open to anyone, anywhere</span>
+        </a>
+        <a class="menu__item" href="#sec-roles">
+          <span class="menu__num">13</span>
+          <span class="menu__label">Role pathways</span>
+        </a>
+        <a class="menu__item" href="#sec-buildpath">
+          <span class="menu__num">14</span>
+          <span class="menu__label">Build path</span>
+        </a>
+        <a class="menu__item" href="#sec-produce">
+          <span class="menu__num">15</span>
+          <span class="menu__label">What contributors produce</span>
+        </a>
+        <a class="menu__item" href="#sec-join">
+          <span class="menu__num">→</span>
+          <span class="menu__label">Join the search</span>
+        </a>
+        <a class="menu__item" href="#sec-sources">
+          <span class="menu__num">16</span>
+          <span class="menu__label">Selected sources</span>
+        </a>
+    </div>
+    <div class="menu-overlay__foot">FloLabs Group | Texas Advanced Robotics Research Lab (TARRL)</div>
+  </div>
+
+  <div class="scroll-progress" aria-hidden="true"><span id="progBar"></span></div>
+
+  <script src="js/site.js"></script>
+</body>
+</html>
